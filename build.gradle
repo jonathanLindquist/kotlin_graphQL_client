@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'groovy'
+	id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven {
+		url 'https://dl.bintray.com/americanexpress/maven/'
+	}
+}
+
+ext {
+	set('groovy.version', "3.0.6")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+	implementation 'io.aexp.nodes.graphql:nodes:0.5.0'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+//compileKotlin {
+//	kotlinOptions {
+//		freeCompilerArgs = listOf("-Xjsr305=strict")
+//		jvmTarget = "11"
+//	}
+//}
+
+test {
+	useJUnitPlatform()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+	kotlinOptions {
+		jvmTarget = "11"
+	}
+}
